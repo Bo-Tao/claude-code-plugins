@@ -1,4 +1,4 @@
-# Claude Plugins Botao
+# Botao Plugins
 
 Botao's Claude Code plugins collection - macOS utilities and productivity tools.
 
@@ -21,14 +21,14 @@ Prevent Mac from sleeping while Claude Code is running.
 Register the marketplace first:
 
 ```
-/plugin marketplace add Bo-Tao/claude-plugins-botao
+/plugin marketplace add Bo-Tao/botao-plugins
 ```
 
 ### Install Plugins
 
 Plugins can be installed directly from this marketplace via Claude Code's plugin system.
 
-To install, run `/plugin install {plugin-name}@claude-plugins-botao`
+To install, run `/plugin install {plugin-name}@botao-plugins`
 
 or browse for the plugin in /plugin > Discover
 

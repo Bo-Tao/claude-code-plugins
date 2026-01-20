@@ -32,20 +32,20 @@ Uses macOS's built-in `caffeinate` command with Claude Code's hooks system:
 Register the marketplace first:
 
 ```
-/plugin marketplace add Bo-Tao/claude-plugins-botao
+/plugin marketplace add Bo-Tao/botao-plugins
 ```
 
 Then install the plugin:
 
 ```
-/plugin install caffeinate@claude-plugins-botao
+/plugin install caffeinate@botao-plugins
 ```
 
 ### Manual Installation
 
 ```bash
-git clone https://github.com/Bo-Tao/claude-plugins-botao.git
-claude --plugin-dir ./claude-plugins-botao/plugins/caffeinate
+git clone https://github.com/Bo-Tao/claude-code-plugins.git
+claude --plugin-dir ./claude-code-plugins/plugins/caffeinate
 ```
 
 ## Technical Details

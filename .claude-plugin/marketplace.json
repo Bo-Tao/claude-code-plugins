@@ -1,5 +1,4 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "claude-plugins-botao",
   "description": "Botao's Claude Code plugins collection",
   "owner": {

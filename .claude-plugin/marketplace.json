@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-plugins-botao",
+  "description": "Botao's Claude Code plugins collection",
+  "owner": {
+    "name": "Botao",
+    "email": "botaoxyz@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "caffeinate",
+      "description": "Prevent Mac from sleeping while Claude Code is running. Automatically manages caffeinate process through session hooks.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Botao"
+      },
+      "source": "./plugins/caffeinate",
+      "category": "utility",
+      "tags": ["macos", "sleep", "caffeinate", "hooks"]
+    }
+  ]
+}

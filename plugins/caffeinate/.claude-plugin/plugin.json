@@ -1,0 +1,9 @@
+{
+  "name": "caffeinate",
+  "version": "1.0.0",
+  "description": "Prevent Mac from sleeping while Claude Code is running",
+  "author": {
+    "name": "Botao"
+  },
+  "keywords": ["macos", "sleep", "caffeinate", "utility"]
+}

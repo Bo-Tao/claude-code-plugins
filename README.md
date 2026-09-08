@@ -14,6 +14,15 @@ Prevent Mac from sleeping while Claude Code is running.
 - Automatically stops when Claude finishes responding
 - Zero configuration required
 
+### botao-skills
+
+A personal collection of custom Claude Code skills.
+
+**Features:**
+- Container plugin for hand-written Agent Skills
+- Skills auto-discovered from `skills/{name}/SKILL.md` — no manifest registration
+- Currently a scaffold; skills are added over time
+
 ## Installation
 
 ### Add marketplace

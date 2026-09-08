@@ -1,6 +1,7 @@
 ---
-name: commit-en
+name: commit
 description: Stage changes and create a git commit with a Conventional Commits message written in Chinese. Use when the user asks to commit, 提交, 保存改动, or wants a commit message generated from the current diff.
+disable-model-invocation: true
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git reset), Grep, Read
 ---
 

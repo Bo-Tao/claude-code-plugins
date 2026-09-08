@@ -16,6 +16,17 @@
       "source": "./plugins/caffeinate",
       "category": "utility",
       "tags": ["macos", "sleep", "caffeinate", "hooks"]
+    },
+    {
+      "name": "botao-skills",
+      "description": "Botao's personal collection of custom Claude Code skills",
+      "version": "0.1.0",
+      "author": {
+        "name": "Botao"
+      },
+      "source": "./plugins/botao-skills",
+      "category": "productivity",
+      "tags": ["skills", "productivity", "workflow", "personal"]
     }
   ]
 }

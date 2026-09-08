@@ -1,0 +1,9 @@
+{
+  "name": "botao-skills",
+  "version": "0.1.0",
+  "description": "Botao's personal collection of custom Claude Code skills",
+  "author": {
+    "name": "Botao"
+  },
+  "keywords": ["skills", "productivity", "workflow", "personal"]
+}

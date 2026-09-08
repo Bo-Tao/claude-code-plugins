@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Claude Code plugins marketplace (`botao-plugins`): macOS utility plugins that extend Claude Code through hooks. Currently ships one plugin, `caffeinate`.
+Claude Code plugins marketplace (`botao-plugins`): personal plugins that extend Claude Code through hooks and skills. Ships `caffeinate` (hooks) and `botao-skills` (skills).
 
 ## Repository Structure
 
@@ -14,17 +14,17 @@ plugins/{plugin-name}/
   .claude-plugin/plugin.json      # Plugin manifest
   hooks/hooks.json                # Hook definitions
   hooks/*.sh                      # Hook scripts (must be chmod +x)
+  skills/{skill-name}/SKILL.md    # Agent skills (auto-discovered)
   README.md                       # Plugin documentation
 ```
 
 ## Creating a New Plugin
 
 1. `plugins/{name}/.claude-plugin/plugin.json` — plugin manifest
-2. `plugins/{name}/hooks/hooks.json` — hook definitions
-3. `plugins/{name}/hooks/*.sh` — bash scripts, `chmod +x`
-4. `plugins/{name}/README.md` — usage docs
-5. Register the plugin in `.claude-plugin/marketplace.json`
-6. Validate both manifests (see Verification)
+2. Components the plugin actually needs — `hooks/`, `skills/`, `commands/`, `agents/` (omit the rest)
+3. `plugins/{name}/README.md` — usage docs
+4. Register the plugin in `.claude-plugin/marketplace.json`
+5. Validate both manifests (see Verification)
 
 ### plugin.json
 
@@ -72,6 +72,25 @@ Events used here: `SessionStart` (session begins), `UserPromptSubmit` (prompt su
 - Put state files in `/tmp/` (e.g. `/tmp/claude_caffeinate.pid`)
 - Scripts must be idempotent: re-running replaces prior state, and a recorded PID is re-checked (`ps -p ... -o args=`) before being killed, so a recycled PID is never signalled
 - `chmod +x` before committing — git must record mode `100755` or the hook silently fails
+
+### Skills
+
+Skills live at `plugins/{name}/skills/{skill-name}/SKILL.md` and are auto-discovered — there is nothing to register in `plugin.json` or `hooks.json`.
+
+```markdown
+---
+name: skill-name
+description: Use when <trigger condition>. <What it does.>
+---
+
+Instructions for Claude...
+```
+
+- The entry file must be named `SKILL.md` exactly; `README.md` is not discovered
+- `description` is the only text Claude sees before loading the skill — lead with *when* to use it, since that is what makes it fire
+- Supporting files go in the skill's own directory (`references/`, `scripts/`, `assets/`) and are referenced via `${CLAUDE_PLUGIN_ROOT}/skills/{skill-name}/...`
+- Keep `SKILL.md` lean; push long reference material into `references/` so it loads only on demand
+- `claude plugin validate` only checks manifests, not skill discovery — confirm a new skill actually loads with `claude --plugin-dir ./plugins/{name}`
 
 ## Verification
 

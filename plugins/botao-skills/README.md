@@ -79,7 +79,7 @@ _None yet — this plugin is a scaffold. Add skills under `skills/`._
 ### Claude Code (add marketplace)
 
 ```
-/plugin marketplace add Bo-Tao/botao-plugins
+/plugin marketplace add Bo-Tao/claude-code-plugins
 /plugin install botao-skills@botao-plugins
 ```
 

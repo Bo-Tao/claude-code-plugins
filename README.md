@@ -30,7 +30,7 @@ A personal collection of custom Claude Code skills.
 Register the marketplace first:
 
 ```
-/plugin marketplace add Bo-Tao/botao-plugins
+/plugin marketplace add Bo-Tao/claude-code-plugins
 ```
 
 ### Install Plugins

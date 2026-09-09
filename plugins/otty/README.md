@@ -1,7 +1,8 @@
 # Otty Plugin
 
 Report Claude Code's state to the [Otty](https://otty.app) terminal app, so each pane shows a
-processing / idle / awaiting-input badge for the agent running inside it.
+processing / idle / awaiting-input badge for the agent running inside it — and let Claude open
+files, folders and URLs inside Otty instead of handing them to an external app.
 
 ## Overview
 
@@ -13,7 +14,7 @@ versioned, portable plugin instead:
 - Works when Otty lives in `~/Applications`, or anywhere via `OTTY_APP`
 - Silently does nothing when Otty isn't installed, so the same config is safe on other machines
 
-## How It Works
+## State Hooks
 
 | Event | Reported state |
 |-------|----------------|
@@ -45,9 +46,29 @@ If none of them holds an executable hook script, the wrapper exits 0 without out
 spawns for a hook has the Claude process as its parent, and Otty needs that pid to match the event
 to a pane (and to ignore a nested `claude -p` fired by a subagent).
 
+## The `open` Skill
+
+`skills/open/SKILL.md` is auto-discovered — nothing to register. It teaches Claude the `otty view`
+/ `otty edit` CLI so that "open this file", "show it beside the terminal", or `/open <path-or-url>`
+lands in Otty rather than in `open(1)`'s default app.
+
+    otty view <path-or-url> [placement] [--mode view|edit]
+    otty edit <path-or-url> [placement]     # same command, editable by default
+
+| Flag | Result |
+|------|--------|
+| `--right` `--left` `--top` `--bottom` | split the current pane that way |
+| `--new-tab` | open in a new tab (the default) |
+| `--new-window` | open in a new window |
+
+Claude maps the wording to a placement — "split" / "beside" → `--right` unless a side is named,
+"new tab" → `--new-tab`, "new window" → `--new-window` — and reports which one it used, so a
+different placement is one flag away.
+
 ## Requirements
 
 - macOS with [Otty](https://otty.app) installed
+- The `otty` CLI on `PATH` for the `open` skill — Otty puts it there inside its own panes
 - Claude Code with plugin support
 
 ## Installation

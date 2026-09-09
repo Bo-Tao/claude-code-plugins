@@ -1,0 +1,9 @@
+{
+  "name": "rename-session",
+  "version": "1.0.0",
+  "description": "Name every Claude Code session automatically from the conversation so far, prefixed with the session's date — or with a version date when you state one",
+  "author": {
+    "name": "Botao"
+  },
+  "keywords": ["session", "rename", "title", "hooks", "productivity"]
+}

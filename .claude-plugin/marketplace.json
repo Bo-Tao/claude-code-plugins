@@ -38,6 +38,17 @@
       "source": "./plugins/otty",
       "category": "utility",
       "tags": ["otty", "terminal", "status", "hooks", "skills", "macos"]
+    },
+    {
+      "name": "rename-session",
+      "description": "Name every Claude Code session automatically from the conversation so far, prefixed with the session's date — or with a version date when you state one",
+      "version": "1.0.0",
+      "author": {
+        "name": "Botao"
+      },
+      "source": "./plugins/rename-session",
+      "category": "productivity",
+      "tags": ["session", "rename", "title", "hooks", "productivity"]
     }
   ]
 }

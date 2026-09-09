@@ -1,0 +1,9 @@
+{
+  "name": "otty",
+  "version": "1.0.0",
+  "description": "Report Claude Code's state to the Otty terminal app so panes show processing / idle / awaiting-input badges",
+  "author": {
+    "name": "Botao"
+  },
+  "keywords": ["otty", "terminal", "status", "hooks", "macos"]
+}

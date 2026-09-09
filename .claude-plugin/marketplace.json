@@ -27,6 +27,17 @@
       "source": "./plugins/botao-skills",
       "category": "productivity",
       "tags": ["skills", "productivity", "workflow", "personal"]
+    },
+    {
+      "name": "otty",
+      "description": "Report Claude Code's state to the Otty terminal app so panes show processing / idle / awaiting-input badges",
+      "version": "1.0.0",
+      "author": {
+        "name": "Botao"
+      },
+      "source": "./plugins/otty",
+      "category": "utility",
+      "tags": ["otty", "terminal", "status", "hooks", "macos"]
     }
   ]
 }

@@ -10,17 +10,17 @@ Claude Code — no manifest registration needed.
 
 Skills activate automatically: Claude reads every skill's `description` and
 loads the full `SKILL.md` when the current task matches. They can also be
-invoked explicitly by name.
+invoked explicitly by name. A skill that sets `disable-model-invocation: true`
+opts out of automatic activation and is reachable only by explicit invocation.
 
 ## Available Skills
 
-_None yet — this plugin is a scaffold. Add skills under `skills/`._
+| Skill | Invoke | What it does |
+|-------|--------|--------------|
+| `commit` | `/botao-skills:commit` | Stages the working tree, infers a Conventional Commits type and scope from the diff, and commits with a Chinese message. Explicit invocation only — staging and committing has side effects that should be triggered deliberately. |
+| `mr` | `/botao-skills:mr <target-branch>` | Opens a GitLab merge request from the current branch into the target branch via `glab`, with a Chinese title and description written from the branch's own commits and diff. Also fires automatically on 提 MR / 开 MR and similar. |
 
-<!-- Keep this table in sync as skills are added:
-| Skill | Purpose |
-|-------|---------|
-| `example-skill` | What it does and when it fires |
--->
+Keep this table in sync as skills are added.
 
 ## Adding a Skill
 

@@ -1,9 +1,9 @@
 {
   "name": "otty",
-  "version": "1.0.0",
-  "description": "Report Claude Code's state to the Otty terminal app so panes show processing / idle / awaiting-input badges",
+  "version": "1.1.0",
+  "description": "Otty terminal integration: report Claude Code's state as pane badges, and open files, folders or URLs in an Otty split, tab or window",
   "author": {
     "name": "Botao"
   },
-  "keywords": ["otty", "terminal", "status", "hooks", "macos"]
+  "keywords": ["otty", "terminal", "status", "hooks", "skills", "macos"]
 }

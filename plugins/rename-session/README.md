@@ -88,6 +88,46 @@ tokens and leaves nothing behind in the session list it is meant to clean up.
 `SESSION_NAMER_RUNNING` guards against recursion — that `-p` call still loads user settings
 (so `apiKeyHelper` and proxy setups keep working), and with them these hooks.
 
+## Hooks
+
+| Event | Mode | Timeout |
+|-------|------|---------|
+| `SessionStart` | async | 120s |
+| `UserPromptSubmit` | async | 120s |
+
+Both run `hooks/rename-session.sh`. The long timeout is deliberate — the hook makes a model
+call — and `async` keeps it off the critical path, so nothing waits on it.
+
+The script redirects its own stdout to `/dev/null`: Claude Code hands an async hook's stdout to
+the model as extra context, and a naming hook has nothing to say to the model.
+
+Only one run names a session at a time. On resume, `SessionStart` and the first
+`UserPromptSubmit` overlap; a `mkdir` lock at `$TMPDIR/session-namer-<id>.lock` keeps them from
+both calling the model and both writing a name. A lock left behind by a killed run is ignored
+once it is older than the hook timeout.
+
+## Requirements
+
+- `jq` on `PATH`
+- The `claude` CLI on `PATH` (or `SESSION_NAMER_CLAUDE_BIN` pointing at it)
+- Claude Code with plugin support
+
+Missing either binary, the hook exits 0 without output.
+
+## Installation
+
+```
+/plugin marketplace add Bo-Tao/claude-code-plugins
+/plugin install rename-session@botao-plugins
+```
+
+Manual:
+
+```bash
+git clone https://github.com/Bo-Tao/claude-code-plugins.git
+claude --plugin-dir ./claude-code-plugins/plugins/rename-session
+```
+
 ## Configuration
 
 All optional.
@@ -124,46 +164,6 @@ Start with the area of the codebase, then a dash, then what is being done.
 Chinese, at most 12 characters.
 EOF
 ```
-
-## Requirements
-
-- `jq` on `PATH`
-- The `claude` CLI on `PATH` (or `SESSION_NAMER_CLAUDE_BIN` pointing at it)
-- Claude Code with plugin support
-
-Missing either binary, the hook exits 0 without output.
-
-## Installation
-
-```
-/plugin marketplace add Bo-Tao/claude-code-plugins
-/plugin install rename-session@botao-plugins
-```
-
-Manual:
-
-```bash
-git clone https://github.com/Bo-Tao/claude-code-plugins.git
-claude --plugin-dir ./claude-code-plugins/plugins/rename-session
-```
-
-## Hooks
-
-| Event | Mode | Timeout |
-|-------|------|---------|
-| `SessionStart` | async | 120s |
-| `UserPromptSubmit` | async | 120s |
-
-Both run `hooks/rename-session.sh`. The long timeout is deliberate — the hook makes a model
-call — and `async` keeps it off the critical path, so nothing waits on it.
-
-The script redirects its own stdout to `/dev/null`: Claude Code hands an async hook's stdout to
-the model as extra context, and a naming hook has nothing to say to the model.
-
-Only one run names a session at a time. On resume, `SessionStart` and the first
-`UserPromptSubmit` overlap; a `mkdir` lock at `$TMPDIR/session-namer-<id>.lock` keeps them from
-both calling the model and both writing a name. A lock left behind by a killed run is ignored
-once it is older than the hook timeout.
 
 ## Troubleshooting
 

@@ -1,84 +1,101 @@
 # Botao Plugins
 
-Botao's Claude Code plugins collection - macOS utilities and productivity tools.
+[English](README.md) · [简体中文](README.zh-CN.md)
 
-## Available Plugins
+Botao's Claude Code plugin marketplace — macOS utilities and productivity tools, built out of
+hooks and Agent Skills.
+
+## Plugins
 
 | Plugin | What it does |
 |--------|--------------|
 | [`rename-session`](plugins/rename-session) | Names every session from the conversation so far |
 | [`otty`](plugins/otty) | Reports Claude Code's state to the Otty terminal, and opens files in it |
-| [`botao-skills`](plugins/botao-skills) | A container for hand-written Agent Skills |
-| [`caffeinate`](plugins/caffeinate) | Keeps the Mac awake — **deprecated**, Claude Code ships its own |
+| [`botao-skills`](plugins/botao-skills) | Hand-written Agent Skills — `commit` and `mr` |
+| [`caffeinate`](plugins/caffeinate) | Kept the Mac awake — **deprecated**, Claude Code ships its own |
+
+Each plugin's own README carries its requirements, configuration and troubleshooting.
 
 ### rename-session
 
-Give every session a real name, so `/resume` shows what each one was about instead of a list
-of first prompts.
+`/resume` lists first prompts, so a session that opened with "hi" stays "greeting" forever. This
+plugin appends a `custom-title` line to the transcript from an async hook, with a name written by
+one short `claude -p` call over the conversation so far — no tools, no MCP servers, no saved
+session. Names stay provisional and are upgraded a few times as the work takes shape; a name you
+set with `/rename` is never touched. Every name carries a prefix the plugin owns —
+`T<session date>｜` by default, `V<version date>｜` when you state a version explicitly.
 
-**Features:**
-- Names from the conversation so far, not just the first prompt — a session opening with "hi"
-  never stays "greeting"
-- Provisional names are upgraded a few times as the work takes shape; a name you set with
-  `/rename` is never touched
-- Every name carries a prefix the plugin owns: `T<session date>｜` by default, `V<version
-  date>｜` when you state a version explicitly
-- One short `claude -p` call per naming, with no tools, no MCP servers and no saved session
+→ [Naming conventions, configuration and troubleshooting](plugins/rename-session/README.md)
 
 ### otty
 
-Report Claude Code's state to the [Otty](https://otty.app) terminal app, and open files,
-folders and URLs inside Otty instead of handing them to an external app.
+Gives each [Otty](https://otty.app) pane a processing / idle / awaiting-input badge for the agent
+running inside it, and teaches Claude to open files, folders and URLs *in* Otty rather than handing
+them to `open(1)`'s default app. Otty can install the same hooks into `~/.claude/settings.json`
+itself, with absolute paths baked into every entry; this plugin locates the app at runtime instead,
+and does nothing at all on a machine where Otty isn't installed.
 
-**Features:**
-- Per-pane processing / idle / awaiting-input badges, via `SessionStart`, `UserPromptSubmit`,
-  `PreToolUse`, `PostToolUse`, `PermissionRequest` and `Stop`
-- No absolute paths in your settings — the app is located at runtime, and the plugin does
-  nothing when Otty isn't installed
-- An `open` skill that maps "open this file" / "show it beside the terminal" / `/open <path>`
-  onto `otty view` and `otty edit`
+→ [State hooks, the `open` skill and troubleshooting](plugins/otty/README.md)
 
 ### botao-skills
 
-A personal collection of custom Claude Code skills.
+A container for hand-written Agent Skills, auto-discovered from `skills/{name}/SKILL.md` with
+nothing to register in the manifest. It ships two: `commit` stages the working tree and writes a
+Conventional Commits message in Chinese from the diff, and `mr` opens a GitLab merge request from
+the current branch with a title and description written from the branch's own commits.
 
-**Features:**
-- Container plugin for hand-written Agent Skills
-- Skills auto-discovered from `skills/{name}/SKILL.md` — no manifest registration
-- Ships `commit` and `mr`; more are added over time
+→ [The skill list, and how to add one](plugins/botao-skills/README.md)
 
 ### caffeinate
 
-Prevent Mac from sleeping while Claude Code is running.
+Held a `caffeinate -i -t 3600` assertion for the length of a session, reset on every prompt.
 
-> **Deprecated.** Claude Code has shipped its own sleep inhibitor on macOS since roughly
-> 2.1.156, so this plugin is redundant — installing it just adds a second `caffeinate`
-> assertion on top of the built-in one. See the
-> [plugin README](plugins/caffeinate/README.md) for the comparison.
+> **Deprecated.** Claude Code has shipped its own sleep inhibitor on macOS since roughly 2.1.156,
+> so installing this just stacks a second `caffeinate` assertion on top of the built-in one. Kept
+> for reference.
 
-**Features:**
-- Automatically starts `caffeinate` when session begins
-- Resets 1-hour timer on each prompt submission
-- Automatically stops when Claude finishes responding
-- Zero configuration required
+→ [How it compares to the built-in inhibitor](plugins/caffeinate/README.md)
 
 ## Installation
 
-### Add marketplace
-
-Register the marketplace first:
+Register the marketplace once:
 
 ```
 /plugin marketplace add Bo-Tao/claude-code-plugins
 ```
 
-### Install Plugins
+Then install what you want, or browse `/plugin` → Discover:
 
-Plugins can be installed directly from this marketplace via Claude Code's plugin system.
+```
+/plugin install rename-session@botao-plugins
+```
 
-To install, run `/plugin install {plugin-name}@botao-plugins`
+## Repository Layout
 
-or browse for the plugin in /plugin > Discover
+```
+.claude-plugin/marketplace.json      # marketplace manifest — lists every plugin
+plugins/{name}/
+  .claude-plugin/plugin.json         # plugin manifest — the only required file
+  hooks/hooks.json                   # hook definitions
+  hooks/*.sh                         # hook scripts (git mode 100755, or they silently fail)
+  skills/{skill}/SKILL.md            # Agent Skills — auto-discovered, nothing to register
+  README.md
+```
+
+A plugin ships `hooks/`, `skills/`, or both; only `plugin.json` is mandatory.
+
+## Local Development
+
+```bash
+claude plugin validate ./plugins/{name}   # plugin manifest
+claude plugin validate .                  # marketplace manifest
+claude --plugin-dir ./plugins/{name}      # load locally and exercise in a real session
+```
+
+`name`, `version`, `description` and `author` are duplicated between `plugin.json` and
+`marketplace.json`, and must stay in sync — `claude plugin tag` refuses to tag a release when the
+two disagree. `claude plugin validate` checks manifests only, not skill discovery, so confirm a new
+skill actually loads with `--plugin-dir`.
 
 ## License
 

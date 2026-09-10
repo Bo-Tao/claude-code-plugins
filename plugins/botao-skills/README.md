@@ -74,19 +74,24 @@ Keep this table in sync as skills are added.
 - **Keep `SKILL.md` lean**: push long reference material into `references/` so it
   is only read when actually needed.
 
-## Installation
+## Requirements
 
-### Claude Code (add marketplace)
+- `git` — both skills read the working tree
+- The [`glab`](https://gitlab.com/gitlab-org/cli) CLI, already authenticated, for `mr`
+- Claude Code with plugin support
+
+## Installation
 
 ```
 /plugin marketplace add Bo-Tao/claude-code-plugins
 /plugin install botao-skills@botao-plugins
 ```
 
-### Manual
+Manual:
 
 ```bash
-claude --plugin-dir ./plugins/botao-skills
+git clone https://github.com/Bo-Tao/claude-code-plugins.git
+claude --plugin-dir ./claude-code-plugins/plugins/botao-skills
 ```
 
 ## License

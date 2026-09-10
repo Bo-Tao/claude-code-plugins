@@ -47,6 +47,12 @@ Uses macOS's built-in `caffeinate` command with Claude Code's hooks system:
 | UserPromptSubmit | Restart caffeinate (reset 1-hour timer) |
 | Stop | Kill caffeinate (allow sleep) |
 
+## Technical Details
+
+- **PID file**: `/tmp/claude_caffeinate.pid`
+- **Timeout**: 1 hour (3600 seconds), reset on each prompt
+- **caffeinate flags**: `-i` (prevent idle sleep) `-t 3600` (timeout)
+
 ## Requirements
 
 - macOS (uses native `caffeinate` command)
@@ -54,32 +60,17 @@ Uses macOS's built-in `caffeinate` command with Claude Code's hooks system:
 
 ## Installation
 
-### Claude Code (add marketplace)
-
-Register the marketplace first:
-
 ```
 /plugin marketplace add Bo-Tao/claude-code-plugins
-```
-
-Then install the plugin:
-
-```
 /plugin install caffeinate@botao-plugins
 ```
 
-### Manual Installation
+Manual:
 
 ```bash
 git clone https://github.com/Bo-Tao/claude-code-plugins.git
 claude --plugin-dir ./claude-code-plugins/plugins/caffeinate
 ```
-
-## Technical Details
-
-- **PID file**: `/tmp/claude_caffeinate.pid`
-- **Timeout**: 1 hour (3600 seconds), reset on each prompt
-- **caffeinate flags**: `-i` (prevent idle sleep) `-t 3600` (timeout)
 
 ## Troubleshooting
 

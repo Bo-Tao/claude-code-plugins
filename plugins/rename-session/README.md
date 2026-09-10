@@ -43,7 +43,26 @@ The prefix belongs to the script; the model only ever writes the body after it.
 The date is the session's **first** day, not the day of the rename, so an upgraded name keeps
 its prefix.
 
+### Stating a version outright
+
+`/version` says it directly, and beats the heuristic below:
+
+```
+/botao-skills:version 20260915 帮我改下 README
+```
+
+The command ships with [`botao-skills`](../botao-skills/README.md). Any namespace is accepted,
+and so is the short spelling `/v` — useful if you drop an alias in
+`~/.claude/commands/`.
+
+Claude Code records a slash command as its invocation rather than its expansion,
+so the declaration is read from two places: `.prompt` for the turn now firing —
+which is why the prefix changes on the very turn you type it — and the
+transcript's `<command-args>` for every turn before it. The last one wins.
+
 ### What counts as a version date
+
+Without an explicit `/v`, a version date is inferred from what you wrote.
 
 A date (`2026-09-15`, `2026/09/15`, `20260915`) qualifies when, within 14 characters of it:
 
@@ -184,8 +203,9 @@ either if you want more.
 **Stopped naming after I renamed it myself** — also intended. Once the effective title is not one
 the plugin wrote, it never writes again for that session.
 
-**Wrong prefix** — a `V` prefix means a version date was detected in the conversation. Quote the
-date or introduce it with `例如` / `e.g.` to keep it from being read as a declaration.
+**Wrong prefix** — a `V` prefix means you declared a version with `/v`, or a version date was
+inferred from the conversation. For the inferred kind, quote the date or introduce it with `例如` /
+`e.g.` to keep it from being read as a declaration.
 
 ## License
 

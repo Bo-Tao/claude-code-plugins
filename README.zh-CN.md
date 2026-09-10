@@ -10,7 +10,7 @@ Botao 的 Claude Code 插件市场 —— 由 hooks 和 Agent Skills 搭起来�
 |------|--------|
 | [`rename-session`](plugins/rename-session) | 根据整段对话给每个会话起名字 |
 | [`otty`](plugins/otty) | 把 Claude Code 的状态报给 Otty 终端，并在 Otty 里打开文件 |
-| [`botao-skills`](plugins/botao-skills) | 手写的 Agent Skills —— `commit` 与 `mr` |
+| [`botao-skills`](plugins/botao-skills) | 手写的 Agent Skills 与斜杠命令 —— `commit`、`mr`、`/version` |
 | [`caffeinate`](plugins/caffeinate) | 让 Mac 不休眠 —— **已废弃**，Claude Code 自带了 |
 
 各插件的依赖、配置和排查都写在它自己的 README 里（英文）。
@@ -38,9 +38,10 @@ Otty 自己也能把同样的 hooks 装进 `~/.claude/settings.json`，但每条
 
 手写 Agent Skills 的容器插件，从 `skills/{name}/SKILL.md` 自动发现，不需要在 manifest 里注册。
 目前有两个：`commit` 暂存工作区并根据 diff 写一条中文的 Conventional Commits 提交信息；`mr` 从当
-前分支开一个 GitLab merge request，标题和描述都由这个分支自己的提交写出。
+前分支开一个 GitLab merge request，标题和描述都由这个分支自己的提交写出。另外带一个斜杠命令：
+`/botao-skills:version 20260915 …` 声明本次会话的版本日期，`rename-session` 会把它变成 `V20260915｜` 的标题前缀。
 
-→ [skill 清单，以及如何新增一个](plugins/botao-skills/README.md)
+→ [skill 与命令清单，以及如何新增一个](plugins/botao-skills/README.md)
 
 ### caffeinate
 

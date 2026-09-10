@@ -19,8 +19,8 @@
     },
     {
       "name": "botao-skills",
-      "description": "Botao's personal collection of custom Claude Code skills",
-      "version": "0.2.0",
+      "description": "Botao's personal collection of custom Claude Code skills and commands",
+      "version": "0.3.0",
       "author": {
         "name": "Botao"
       },
@@ -42,7 +42,7 @@
     {
       "name": "rename-session",
       "description": "Name every Claude Code session automatically from the conversation so far, prefixed with the session's date — or with a version date when you state one",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": {
         "name": "Botao"
       },

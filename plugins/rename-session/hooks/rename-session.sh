@@ -22,7 +22,8 @@
 # A version date is a date with a version word ("版本", "迭代", "version"…)
 # within 14 characters of it, and no ordinary-business word ("创建", "发布",
 # "release"…) in that same window. Dates quoted or given as examples don't
-# count. Because the prefix is ours and the body is not, a version stated
+# count. A `/version 20260915 …` command states one outright and beats the
+# heuristic. Because the prefix is ours and the body is not, a version stated
 # mid-session is applied to the standing name directly, with no model call and
 # without spending the rename budget.
 #
@@ -232,6 +233,24 @@ version_date=$(printf '%s' "$turns" | jq -r --arg p "$prompt" '
     | ($m.captures | map(.string) | join(""))
   ] | last // ""
 ' 2>/dev/null)
+
+# An explicit declaration beats the heuristic. `/version 20260915 …` states the
+# version outright, so there is nothing to infer; both the namespace and the
+# short `/v` spelling are optional, so the command works wherever it is
+# installed (/botao-skills:version). Claude Code records a slash command as its invocation
+# rather than its expansion, and the turn now firing has not reached the
+# transcript at all — so a declaration is read from two places: <command-args>
+# for the turns already recorded, and .prompt for this one. The last wins.
+declared=$(
+  {
+    grep -E '<command-name>/([A-Za-z0-9_-]+:)?v(ersion)?</command-name>' "$transcript" 2>/dev/null \
+      | jq -r 'select(.type == "user") | .message.content | select(type == "string")' 2>/dev/null
+    printf '%s' "$prompt"
+  } | jq -Rr '
+    (match("^\\s*(?:/(?:[A-Za-z0-9_-]+:)?v(?:ersion)?|<command-args>)\\s*(20[0-9]{2})[-/.]?(0[1-9]|1[0-2])[-/.]?(0[1-9]|[12][0-9]|3[01])(?:[^0-9]|$)") // empty)
+    | .captures | map(.string) | join("")
+  ' 2>/dev/null | tail -n 1)
+[ -n "$declared" ] && version_date="$declared"
 
 if [ -n "$version_date" ]; then
   prefix="V$version_date$SEP"

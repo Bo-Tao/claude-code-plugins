@@ -18,13 +18,13 @@
       "tags": ["macos", "sleep", "caffeinate", "hooks"]
     },
     {
-      "name": "botao-skills",
+      "name": "botao",
       "description": "Botao's personal collection of custom Claude Code skills and commands",
-      "version": "0.3.0",
+      "version": "1.0.0",
       "author": {
         "name": "Botao"
       },
-      "source": "./plugins/botao-skills",
+      "source": "./plugins/botao",
       "category": "productivity",
       "tags": ["skills", "productivity", "workflow", "personal"]
     },

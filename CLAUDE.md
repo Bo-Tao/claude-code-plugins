@@ -10,7 +10,7 @@ Claude Code plugins marketplace (`botao-plugins`): personal plugins that extend 
 |---|---|---|
 | `rename-session` | hooks | async hooks; calling `claude -p` from inside a hook |
 | `otty` | hooks + skills | delegating to an external app; `PreToolUse` / `PostToolUse` / `PermissionRequest` |
-| `botao-skills` | skills + commands | skills and slash commands, no hooks at all |
+| `botao` | skills + commands | skills and slash commands, no hooks at all |
 | `caffeinate` | hooks | the simplest hook plugin — **deprecated**, superseded by Claude Code's own sleep inhibitor |
 
 ## Repository Structure

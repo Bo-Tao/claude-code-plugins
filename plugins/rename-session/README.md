@@ -48,10 +48,10 @@ its prefix.
 `/version` says it directly, and beats the heuristic below:
 
 ```
-/botao-skills:version 20260915 帮我改下 README
+/botao:version 20260915 帮我改下 README
 ```
 
-The command ships with [`botao-skills`](../botao-skills/README.md). Any namespace is accepted,
+The command ships with [`botao`](../botao/README.md). Any namespace is accepted,
 and so is the short spelling `/v` — useful if you drop an alias in
 `~/.claude/commands/`.
 

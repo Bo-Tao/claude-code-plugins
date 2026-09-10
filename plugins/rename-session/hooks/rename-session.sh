@@ -237,7 +237,7 @@ version_date=$(printf '%s' "$turns" | jq -r --arg p "$prompt" '
 # An explicit declaration beats the heuristic. `/version 20260915 …` states the
 # version outright, so there is nothing to infer; both the namespace and the
 # short `/v` spelling are optional, so the command works wherever it is
-# installed (/botao-skills:version). Claude Code records a slash command as its invocation
+# installed (/botao:version). Claude Code records a slash command as its invocation
 # rather than its expansion, and the turn now firing has not reached the
 # transcript at all — so a declaration is read from two places: <command-args>
 # for the turns already recorded, and .prompt for this one. The last wins.

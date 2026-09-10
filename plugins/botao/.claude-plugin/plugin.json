@@ -1,6 +1,6 @@
 {
-  "name": "botao-skills",
-  "version": "0.3.0",
+  "name": "botao",
+  "version": "1.0.0",
   "description": "Botao's personal collection of custom Claude Code skills and commands",
   "author": {
     "name": "Botao"

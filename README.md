@@ -11,7 +11,7 @@ hooks and Agent Skills.
 |--------|--------------|
 | [`rename-session`](plugins/rename-session) | Names every session from the conversation so far |
 | [`otty`](plugins/otty) | Reports Claude Code's state to the Otty terminal, and opens files in it |
-| [`botao-skills`](plugins/botao-skills) | Hand-written Agent Skills and slash commands — `commit`, `mr`, `/version` |
+| [`botao`](plugins/botao) | Hand-written Agent Skills and slash commands — `commit`, `mr`, `/version` |
 | [`caffeinate`](plugins/caffeinate) | Kept the Mac awake — **deprecated**, Claude Code ships its own |
 
 Each plugin's own README carries its requirements, configuration and troubleshooting.
@@ -37,16 +37,16 @@ and does nothing at all on a machine where Otty isn't installed.
 
 → [State hooks, the `open` skill and troubleshooting](plugins/otty/README.md)
 
-### botao-skills
+### botao
 
 A container for hand-written Agent Skills, auto-discovered from `skills/{name}/SKILL.md` with
 nothing to register in the manifest. It ships two: `commit` stages the working tree and writes a
 Conventional Commits message in Chinese from the diff, and `mr` opens a GitLab merge request from
 the current branch with a title and description written from the branch's own commits. It also
-ships one slash command: `/botao-skills:version 20260915 …` declares the version date of the session, which
+ships one slash command: `/botao:version 20260915 …` declares the version date of the session, which
 `rename-session` turns into a `V20260915｜` title prefix.
 
-→ [The skill list, the command list, and how to add one](plugins/botao-skills/README.md)
+→ [The skill list, the command list, and how to add one](plugins/botao/README.md)
 
 ### caffeinate
 

@@ -1,12 +1,13 @@
-# Botao Skills Plugin
+# Botao Plugin
 
-A personal collection of custom Claude Code skills.
+Botao's personal skills and slash commands for Claude Code.
 
 ## Overview
 
-This plugin is a container for hand-written [Agent Skills](https://docs.claude.com/en/docs/claude-code/skills).
-Each skill lives in its own directory under `skills/` and is auto-discovered by
-Claude Code — no manifest registration needed.
+This plugin is a container for hand-written [Agent Skills](https://docs.claude.com/en/docs/claude-code/skills)
+and slash commands. Each skill lives in its own directory under `skills/`, each
+command is a file under `commands/`, and both are auto-discovered by Claude Code
+— no manifest registration needed.
 
 Skills activate automatically: Claude reads every skill's `description` and
 loads the full `SKILL.md` when the current task matches. They can also be
@@ -21,8 +22,8 @@ and sent as your message. Nothing in it executes.
 
 | Skill | Invoke | What it does |
 |-------|--------|--------------|
-| `commit` | `/botao-skills:commit` | Stages the working tree, infers a Conventional Commits type and scope from the diff, and commits with a Chinese message. Explicit invocation only — staging and committing has side effects that should be triggered deliberately. |
-| `mr` | `/botao-skills:mr <target-branch>` | Opens a GitLab merge request from the current branch into the target branch via `glab`, with a Chinese title and description written from the branch's own commits and diff. Also fires automatically on 提 MR / 开 MR and similar. |
+| `commit` | `/botao:commit` | Stages the working tree, infers a Conventional Commits type and scope from the diff, and commits with a Chinese message. Explicit invocation only — staging and committing has side effects that should be triggered deliberately. |
+| `mr` | `/botao:mr <target-branch>` | Opens a GitLab merge request from the current branch into the target branch via `glab`, with a Chinese title and description written from the branch's own commits and diff. Also fires automatically on 提 MR / 开 MR and similar. |
 
 Keep this table in sync as skills are added.
 
@@ -30,12 +31,12 @@ Keep this table in sync as skills are added.
 
 | Command | Invoke | What it does |
 |---------|--------|--------------|
-| `version` | `/botao-skills:version <YYYYMMDD> [请求]` | Declares the version date of the current session, so [`rename-session`](../rename-session/README.md) titles it `V<date>｜…` rather than `T<date>｜…`. Whatever follows the date is handled as an ordinary request. |
+| `version` | `/botao:version <YYYYMMDD> [请求]` | Declares the version date of the current session, so [`rename-session`](../rename-session/README.md) titles it `V<date>｜…` rather than `T<date>｜…`. Whatever follows the date is handled as an ordinary request. |
 
-### `/botao-skills:version` — declaring a version
+### `/botao:version` — declaring a version
 
 ```
-/botao-skills:version 20260915 帮我改下 README
+/botao:version 20260915 帮我改下 README
 ```
 
 Two things at once: this session belongs to version 20260915, and here is the
@@ -56,7 +57,7 @@ first argument `$1` while Codex numbers it `$0`, so one file serves both.
 1. Create the directory and entry file:
 
    ```
-   plugins/botao-skills/skills/{skill-name}/SKILL.md
+   plugins/botao/skills/{skill-name}/SKILL.md
    ```
 
 2. Write `SKILL.md` with YAML frontmatter:
@@ -105,7 +106,7 @@ first argument `$1` while Codex numbers it `$0`, so one file serves both.
 
 ## Adding a Command
 
-Drop a markdown file in `commands/`; it becomes `/botao-skills:{filename}`.
+Drop a markdown file in `commands/`; it becomes `/botao:{filename}`.
 Frontmatter takes `description` and `argument-hint`; the body is the prompt,
 with `$ARGUMENTS` substituted. Plugin commands are always namespaced — a bare
 `/{name}` is rejected as an unknown command — so for a command you type often,
@@ -121,7 +122,7 @@ add an alias file under `~/.claude/commands/`.
 
 ```
 /plugin marketplace add Bo-Tao/claude-code-plugins
-/plugin install botao-skills@botao-plugins
+/plugin install botao@botao-plugins
 ```
 
 Manual:
